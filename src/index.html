@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="./output.css">
+</head>
+
+<body>
+    <!-- Display -->
+    <div class="flex justify-center items-center h-screen bg-black/90 relative">
+        <div
+            class="h-auto w-96 bg-white/10 backdrop-blur-3xl border border-white/10 drop-shadow-xl rounded-2xl flex flex-col justify-center items-center p-8 shadow-lg">
+            <!-- thumbnail -->
+            <div class="thumbnail">
+                <img src="./images/Dua Lipa.jpg" class="h-[220px] w-[220px] rounded-2xl shadow-lg">
+            </div>
+            <!-- Artist Name -->
+            <div class="text-center">
+                <h1 class="artist-name text-3xl text-white pt-2">My Rules</h1>
+                <p class="song-name text-lg text-white pb-2">Dua Lipa</p>
+            </div>
+            <!-- Audio -->
+            <div class="music-audio w-full pt-4">
+                <input type="range" min="0" max="100" value="0"
+                    class="audio-slider appearance-none bg-black rounded-2xl h-2 w-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:bg-purple-300 [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-purple-900 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:rounded-full">
+                <div class="flex justify-between items-center text-white">
+                    <span class="startTime">00:00</span>
+                    <span class="endTime">00:00</span>
+                </div>
+            </div>
+            <!-- icons -->
+            <div class="flex justify-center items-center pt-8 gap-8">
+                <!-- backward icon -->
+                <span onclick="backward()"
+                    class="backward border-2 border-white/50 rounded-full pt-2 pb-2 pr-2.5 pl-1.5 shadow-lg hover:shadow-2xl shadow-purple-900 hover:bg-purple-600">
+                    <svg fill="#ffffff" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        class="h-10 w-10 cursor-pointer">
+                        <path
+                            d="M0 16q0 1.12 0.896 1.664l12 8q0.448 0.32 0.992 0.352t1.056-0.224q0.48-0.288 0.768-0.768t0.288-1.024v-16q0-0.544-0.288-1.024t-0.768-0.736-1.056-0.224-0.992 0.32l-12 8q-0.896 0.608-0.896 1.664zM16 16q0 1.12 0.896 1.664l12 8q0.448 0.32 0.992 0.352t1.056-0.224q0.48-0.288 0.768-0.768t0.288-1.024v-16q0-0.544-0.288-1.024t-0.768-0.736-1.056-0.224-0.992 0.32l-12 8q-0.896 0.608-0.896 1.664z">
+                        </path>
+                    </svg>
+                </span>
+                <!-- pause icon and play icon -->
+                <span
+                    class="play border-2 border-white/50 rounded-full p-2 shadow-lg hover:shadow-2xl shadow-purple-900 hover:bg-purple-600">
+                    <svg onclick="playSong()" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"
+                        class="h-10 w-10 cursor-pointer">
+                        <path
+                            d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z"
+                            fill="#ffffff" />
+                    </svg>
+                </span>
+                <span
+                    class="pause border-2 border-white/50 rounded-full p-2 shadow-lg hover:shadow-2xl shadow-purple-900 hover:bg-purple-600 hidden">
+                    <svg onclick="pauseSong()" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        class="h-10 w-10 cursor-pointer">
+                        <path
+                            d="M2 6C2 4.11438 2 3.17157 2.58579 2.58579C3.17157 2 4.11438 2 6 2C7.88562 2 8.82843 2 9.41421 2.58579C10 3.17157 10 4.11438 10 6V18C10 19.8856 10 20.8284 9.41421 21.4142C8.82843 22 7.88562 22 6 22C4.11438 22 3.17157 22 2.58579 21.4142C2 20.8284 2 19.8856 2 18V6Z"
+                            fill="#ffffff" />
+                        <path
+                            d="M14 6C14 4.11438 14 3.17157 14.5858 2.58579C15.1716 2 16.1144 2 18 2C19.8856 2 20.8284 2 21.4142 2.58579C22 3.17157 22 4.11438 22 6V18C22 19.8856 22 20.8284 21.4142 21.4142C20.8284 22 19.8856 22 18 22C16.1144 22 15.1716 22 14.5858 21.4142C14 20.8284 14 19.8856 14 18V6Z"
+                            fill="#ffffff" />
+                    </svg>
+                </span>
+                <!-- forward icon -->
+                <span onclick="forward()"
+                    class="forward border-2 border-white/50 rounded-full pt-2 pb-2 pl-2.5 pr-1.5 shadow-lg hover:shadow-2xl shadow-purple-900 hover:bg-purple-600">
+                    <svg fill="#ffffff" class="h-10 w-10 cursor-pointer" viewBox="0 0 32 32" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M0 24q0 0.544 0.288 1.056t0.768 0.736q0.48 0.256 1.056 0.224t0.992-0.32l12-8q0.896-0.608 0.896-1.696t-0.896-1.632l-12-8q-0.448-0.32-0.992-0.352t-1.056 0.224q-0.48 0.256-0.768 0.736t-0.288 1.024v16zM16 24q0 0.544 0.288 1.056t0.768 0.736q0.48 0.256 1.056 0.224t0.992-0.32l12-8q0.896-0.608 0.896-1.696t-0.896-1.632l-12-8q-0.448-0.32-0.992-0.352t-1.056 0.224q-0.48 0.256-0.768 0.736t-0.288 1.024v16z">
+                        </path>
+                    </svg>
+                </span>
+                <!-- favourite icon -->
+                <span onclick="changeColor()"
+                    class="fav border-2 border-white/50 rounded-full p-2 shadow-lg hover:shadow-2xl shadow-purple-900 hover:bg-purple-600">
+                    <svg viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"
+                        class="h-10 w-10 cursor-pointer">
+                        <path
+                            d="M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
+                            fill="#ffffff" />
+                    </svg>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- logo -->
+    <img src="./images/logo.png" class="absolute w-12 h-12 top-2 left-3 rounded-full z-1">
+
+    <!-- Nav -->
+    <div class="absolute top-0 w-[1090px] h-[60px] bg-black/60 border-b-2 border-white/10">
+        <ul class="flex text-white text-lg gap-3 p-4 justify-around items-center">
+            <li class="text-fuchsia-300 cursor-pointer underline underline-offset-24 decoration-purple-700">Home</li>
+            <li
+                class="cursor-pointer transition duration-500 hover:underline underline-offset-24 decoration-purple-700 hover:-translate-y-1 hover:text-fuchsia-300">
+                Premium</li>
+            <li
+                class="cursor-pointer transition duration-500 hover:underline underline-offset-24 decoration-purple-700 hover:-translate-y-1 hover:text-fuchsia-300">
+                Download</li>
+            <li
+                class="cursor-pointer transition duration-500 hover:underline underline-offset-24 decoration-purple-700 hover:-translate-y-1 hover:text-fuchsia-300">
+                Login</li>
+            <li
+                class="cursor-pointer transition duration-500 hover:underline underline-offset-24 decoration-purple-700 hover:-translate-y-1 hover:text-fuchsia-300">
+                Sign Up</li>
+        </ul>
+    </div>
+
+    <!-- sideBar -->
+    <div class="absolute top-24 left-8 p-7 h-[500px] overflow-y-scroll bg-white/10 border-2 border-white/10 w-96 rounded-lg text-white 
+                [&::-webkit-scrollbar]:w-[6px] 
+                [&::-webkit-scrollbar-thumb]:w-[4px] 
+                [&::-webkit-scrollbar-thumb]:h-[10px]
+                [&::-webkit-scrollbar-thumb]:border-1
+                [&::-webkit-scrollbar-thumb]:border-purple-700
+                [&::-webkit-scrollbar-thumb]:bg-black
+                [&::-webkit-scrollbar-thumb]:rounded-full">
+        <div onclick="sendData(id)" id="0" data-index="0"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/Dua Lipa.jpg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Levitating</span>
+                <span class="text-sm block">Dua Lipa</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="1" data-index="1"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/chuttamalle.jpeg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">chuttamalle</span>
+                <span class="text-sm block">Shilpa Rao</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="2" data-index="2"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/aasaKooda.jpg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Aasa Kooda</span>
+                <span class="text-sm block">Sai Abhyankkar</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="3" data-index="3"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/Hey Minnale.jpeg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Hey Minnale</span>
+                <span class="text-sm block">GV Prakash</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="4" data-index="4"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/matta.jpeg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Matta</span>
+                <span class="text-sm block">Yuvan Shankar Raja</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="5" data-index="5"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/Golden Sparrow.jpeg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Golden Sparrow</span>
+                <span class="text-sm block">GV Prakash</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="6" data-index="6"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/Chillanjirukkiye.jpg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Chillanjirukkiye</span>
+                <span class="text-sm block">Sean Roldan</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="7" data-index="7"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/heyMama.jpeg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Hey Mama</span>
+                <span class="text-sm block">David Guetta</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="8" data-index="8"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/money.jpg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Lisa - Money</span>
+                <span class="text-sm block">Lisa</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+        <div onclick="sendData(id)" id="9" data-index="9"
+            class="flex items-center border-2 border-white/50 p-2 rounded-xl justify-around mt-4 transition duration-500 hover:bg-white/20 hover:-translate-y-1 hover:cursor-pointer hover:scale-105 group">
+            <img src="./images/bulletproof.jpg" class="h-12 w-12 rounded-full group-hover:border-2 border-black">
+            <div>
+                <span class="text-xl block font-bold">Bulletproof</span>
+                <span class="text-sm block">BTS</span>
+            </div>
+            <span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 cursor-pointer fill-white group-hover:fill-black">
+                    <path
+                        d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" />
+                </svg>
+            </span>
+        </div>
+    </div>
+
+    <!-- Artists and songs -->
+    <div class="absolute top-0 right-0 h-screen w-[430px] bg-white/10 border-l-4 border-black text-left text-white overflow-y-scroll
+                [&::-webkit-scrollbar]:w-[6px] 
+                [&::-webkit-scrollbar-thumb]:w-[4px] 
+                [&::-webkit-scrollbar-thumb]:h-[10px]
+                [&::-webkit-scrollbar-thumb]:border-1
+                [&::-webkit-scrollbar-thumb]:border-purple-700
+                [&::-webkit-scrollbar-thumb]:bg-black
+                [&::-webkit-scrollbar-thumb]:rounded-full" style="direction: rtl;">
+        <!-- Artist -->
+        <h1 class="p-4 text-3xl font-bold">Popular Artist</h1>
+        <div class="flex items-center justify-between p-2">
+            <div class="flex flex-col items-center cursor-pointer">
+                <img src="./images/artist3.jpg" class="h-28 w-28 rounded-full object-cover">
+                <p class="pt-2">Justin Bieber</p>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer">
+                <img src="./images/artist2.jpg" class="h-28 w-28 rounded-full object-cover">
+                <p class="pt-2">Taylor Swift</p>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer">
+                <img src="./images/artist1.jpeg" class="h-28 w-28 rounded-full object-cover">
+                <p class="pt-2">A R Rahman</p>
+            </div>
+        </div>
+        <br>
+        <!-- Albums -->
+        <h1 class="p-4 text-3xl font-bold">Popular Albums</h1>
+        <div class="grid grid-cols-3 gap-3">
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <img src="https://picsum.photos/id/10/200/200" class="h-28 w-28 rounded-xl object-cover">
+                <p class="pt-2">Best of Dance</p>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <img src="https://picsum.photos/id/12/200/200" class="h-28 w-28 rounded-xl object-cover">
+                <p class="pt-2">Zumba</p>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <img src="https://picsum.photos/id/13/200/200" class="h-28 w-28 rounded-xl object-cover">
+                <p class="pt-2">Wake Up Beats</p>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <img src="https://picsum.photos/id/22/200/200" class="h-28 w-28 rounded-xl object-cover">
+                <p class="pt-2">2000 Hits</p>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <img src="https://picsum.photos/id/14/200/200" class="h-28 w-28 rounded-xl object-cover">
+                <p class="pt-2">Decade of 2010s</p>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <img src="https://picsum.photos/id/47/200/200" class="h-28 w-28 rounded-xl object-cover">
+                <p class="pt-2">Dance Queens</p>
+            </div>
+        </div>
+        <br>
+        <!-- channel -->
+        <h1 class="p-4 text-3xl font-bold">Channel</h1>
+        <div class="grid grid-cols-2 gap-2 p-2 text-black">
+            <div class="relative"><img src="./images/channel1.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+                <p class="absolute top-2 left-1/2 font-bold">workout</p>
+            </div>
+            <div class="relative"><img src="./images/channel2.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+                <p class="absolute top-2 right-6 font-bold text-white">party</p>
+            </div>
+            <div class="relative"><img src="./images/channel3.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+            </div>
+            <div class="relative"><img src="./images/channel4.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+            </div>
+            <div class="relative"><img src="./images/channel5.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+            </div>
+            <div class="relative"><img src="./images/channel6.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+                <p class="absolute top-10 left-12 font-bold">Old is Gold</p>
+            </div>
+            <div class="relative"><img src="./images/channel7.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+                <p class="absolute top-3 left-12 font-bold">Hits</p>
+            </div>
+            <div class="relative"><img src="./images/channel8.png"
+                    class="h-28 w-48 cursor-pointer border-2 border-black rounded-xl object-cover hover:opacity-80">
+                <p class="absolute top-10 left-12 font-bold">Devotional</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="h-[200px] w-full bg-black flex justify-around items-center p-10 border-t-2 border-white/20 text-white">
+        <div class="flex flex-col justify-center items-center">
+            <img src="./images/logo.png" class="h-28 w-28 rounded-full">
+            <p class="mt-1 hover:text-fuchsia-300 cursor-pointer">About Us</p>
+        </div>
+        <div class="flex flex-col justify-center items-left">
+            <h1 class="text-xl underline underline-offset-2 decoration-white">Social Media & Community</h1>
+            <p class="mt-1">Follow us on</p>
+            <ul class="flex flex-row gap-4 mt-3">
+                <li>
+                    <svg class="h-10 w-10 cursor-pointer hover:-translate-y-3 transform transition duration-700 hover:shadow-2xl shadow-fuchsia-600"
+                        viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint0_radial_87_7153)" />
+                        <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint1_radial_87_7153)" />
+                        <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint2_radial_87_7153)" />
+                        <path
+                            d="M23 10.5C23 11.3284 22.3284 12 21.5 12C20.6716 12 20 11.3284 20 10.5C20 9.67157 20.6716 9 21.5 9C22.3284 9 23 9.67157 23 10.5Z"
+                            fill="white" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M16 21C18.7614 21 21 18.7614 21 16C21 13.2386 18.7614 11 16 11C13.2386 11 11 13.2386 11 16C11 18.7614 13.2386 21 16 21ZM16 19C17.6569 19 19 17.6569 19 16C19 14.3431 17.6569 13 16 13C14.3431 13 13 14.3431 13 16C13 17.6569 14.3431 19 16 19Z"
+                            fill="white" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M6 15.6C6 12.2397 6 10.5595 6.65396 9.27606C7.2292 8.14708 8.14708 7.2292 9.27606 6.65396C10.5595 6 12.2397 6 15.6 6H16.4C19.7603 6 21.4405 6 22.7239 6.65396C23.8529 7.2292 24.7708 8.14708 25.346 9.27606C26 10.5595 26 12.2397 26 15.6V16.4C26 19.7603 26 21.4405 25.346 22.7239C24.7708 23.8529 23.8529 24.7708 22.7239 25.346C21.4405 26 19.7603 26 16.4 26H15.6C12.2397 26 10.5595 26 9.27606 25.346C8.14708 24.7708 7.2292 23.8529 6.65396 22.7239C6 21.4405 6 19.7603 6 16.4V15.6ZM15.6 8H16.4C18.1132 8 19.2777 8.00156 20.1779 8.0751C21.0548 8.14674 21.5032 8.27659 21.816 8.43597C22.5686 8.81947 23.1805 9.43139 23.564 10.184C23.7234 10.4968 23.8533 10.9452 23.9249 11.8221C23.9984 12.7223 24 13.8868 24 15.6V16.4C24 18.1132 23.9984 19.2777 23.9249 20.1779C23.8533 21.0548 23.7234 21.5032 23.564 21.816C23.1805 22.5686 22.5686 23.1805 21.816 23.564C21.5032 23.7234 21.0548 23.8533 20.1779 23.9249C19.2777 23.9984 18.1132 24 16.4 24H15.6C13.8868 24 12.7223 23.9984 11.8221 23.9249C10.9452 23.8533 10.4968 23.7234 10.184 23.564C9.43139 23.1805 8.81947 22.5686 8.43597 21.816C8.27659 21.5032 8.14674 21.0548 8.0751 20.1779C8.00156 19.2777 8 18.1132 8 16.4V15.6C8 13.8868 8.00156 12.7223 8.0751 11.8221C8.14674 10.9452 8.27659 10.4968 8.43597 10.184C8.81947 9.43139 9.43139 8.81947 10.184 8.43597C10.4968 8.27659 10.9452 8.14674 11.8221 8.0751C12.7223 8.00156 13.8868 8 15.6 8Z"
+                            fill="white" />
+                        <defs>
+                            <radialGradient id="paint0_radial_87_7153" cx="0" cy="0" r="1"
+                                gradientUnits="userSpaceOnUse"
+                                gradientTransform="translate(12 23) rotate(-55.3758) scale(25.5196)">
+                                <stop stop-color="#B13589" />
+                                <stop offset="0.79309" stop-color="#C62F94" />
+                                <stop offset="1" stop-color="#8A3AC8" />
+                            </radialGradient>
+                            <radialGradient id="paint1_radial_87_7153" cx="0" cy="0" r="1"
+                                gradientUnits="userSpaceOnUse"
+                                gradientTransform="translate(11 31) rotate(-65.1363) scale(22.5942)">
+                                <stop stop-color="#E0E8B7" />
+                                <stop offset="0.444662" stop-color="#FB8A2E" />
+                                <stop offset="0.71474" stop-color="#E2425C" />
+                                <stop offset="1" stop-color="#E2425C" stop-opacity="0" />
+                            </radialGradient>
+                            <radialGradient id="paint2_radial_87_7153" cx="0" cy="0" r="1"
+                                gradientUnits="userSpaceOnUse"
+                                gradientTransform="translate(0.500002 3) rotate(-8.1301) scale(38.8909 8.31836)">
+                                <stop offset="0.156701" stop-color="#406ADC" />
+                                <stop offset="0.467799" stop-color="#6A45BE" />
+                                <stop offset="1" stop-color="#6A45BE" stop-opacity="0" />
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="h-10 w-10 cursor-pointer hover:-translate-y-3 transform transition duration-700 hover:shadow-2xl shadow-sky-500"
+                        viewBox="0 -4 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Color-" transform="translate(-300.000000, -164.000000)" fill="#00AAEC">
+                                <path
+                                    d="M348,168.735283 C346.236309,169.538462 344.337383,170.081618 342.345483,170.324305 C344.379644,169.076201 345.940482,167.097147 346.675823,164.739617 C344.771263,165.895269 342.666667,166.736006 340.418384,167.18671 C338.626519,165.224991 336.065504,164 333.231203,164 C327.796443,164 323.387216,168.521488 323.387216,174.097508 C323.387216,174.88913 323.471738,175.657638 323.640782,176.397255 C315.456242,175.975442 308.201444,171.959552 303.341433,165.843265 C302.493397,167.339834 302.008804,169.076201 302.008804,170.925244 C302.008804,174.426869 303.747139,177.518238 306.389857,179.329722 C304.778306,179.280607 303.256911,178.821235 301.9271,178.070061 L301.9271,178.194294 C301.9271,183.08848 305.322064,187.17082 309.8299,188.095341 C309.004402,188.33225 308.133826,188.450704 307.235077,188.450704 C306.601162,188.450704 305.981335,188.390033 305.381229,188.271578 C306.634971,192.28169 310.269414,195.2026 314.580032,195.280607 C311.210424,197.99061 306.961789,199.605634 302.349709,199.605634 C301.555203,199.605634 300.769149,199.559408 300,199.466956 C304.358514,202.327194 309.53689,204 315.095615,204 C333.211481,204 343.114633,188.615385 343.114633,175.270495 C343.114633,174.831347 343.106181,174.392199 343.089276,173.961719 C345.013559,172.537378 346.684275,170.760563 348,168.735283"
+                                    id="Twitter">
+
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="h-10 w-10 cursor-pointer hover:-translate-y-3 transform transition duration-700 hover:shadow-2xl shadow-red-500"
+                        viewBox="0 -7 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Color-" transform="translate(-200.000000, -368.000000)" fill="#CE1312">
+                                <path
+                                    d="M219.044,391.269916 L219.0425,377.687742 L232.0115,384.502244 L219.044,391.269916 Z M247.52,375.334163 C247.52,375.334163 247.0505,372.003199 245.612,370.536366 C243.7865,368.610299 241.7405,368.601235 240.803,368.489448 C234.086,368 224.0105,368 224.0105,368 L223.9895,368 C223.9895,368 213.914,368 207.197,368.489448 C206.258,368.601235 204.2135,368.610299 202.3865,370.536366 C200.948,372.003199 200.48,375.334163 200.48,375.334163 C200.48,375.334163 200,379.246723 200,383.157773 L200,386.82561 C200,390.73817 200.48,394.64922 200.48,394.64922 C200.48,394.64922 200.948,397.980184 202.3865,399.447016 C204.2135,401.373084 206.612,401.312658 207.68,401.513574 C211.52,401.885191 224,402 224,402 C224,402 234.086,401.984894 240.803,401.495446 C241.7405,401.382148 243.7865,401.373084 245.612,399.447016 C247.0505,397.980184 247.52,394.64922 247.52,394.64922 C247.52,394.64922 248,390.73817 248,386.82561 L248,383.157773 C248,379.246723 247.52,375.334163 247.52,375.334163 L247.52,375.334163 Z"
+                                    id="Youtube">
+
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="h-10 w-10 cursor-pointer hover:-translate-y-3 transform transition duration-700 hover:shadow-2xl shadow-sky-600"
+                        viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Color-" transform="translate(-200.000000, -160.000000)" fill="#4460A0">
+                                <path
+                                    d="M225.638355,208 L202.649232,208 C201.185673,208 200,206.813592 200,205.350603 L200,162.649211 C200,161.18585 201.185859,160 202.649232,160 L245.350955,160 C246.813955,160 248,161.18585 248,162.649211 L248,205.350603 C248,206.813778 246.813769,208 245.350955,208 L233.119305,208 L233.119305,189.411755 L239.358521,189.411755 L240.292755,182.167586 L233.119305,182.167586 L233.119305,177.542641 C233.119305,175.445287 233.701712,174.01601 236.70929,174.01601 L240.545311,174.014333 L240.545311,167.535091 C239.881886,167.446808 237.604784,167.24957 234.955552,167.24957 C229.424834,167.24957 225.638355,170.625526 225.638355,176.825209 L225.638355,182.167586 L219.383122,182.167586 L219.383122,189.411755 L225.638355,189.411755 L225.638355,208 L225.638355,208 Z"
+                                    id="Facebook">
+
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                </li>
+            </ul>
+            <p class="mt-1 hover:text-fuchsia-300 cursor-pointer">Feedback & Support</p>
+            <p class="mt-1 hover:text-fuchsia-300 cursor-pointer">Community</p>
+        </div>
+        <div class="flex flex-col justify-center items-left">
+            <h1 class="text-xl underline underline-offset-2 decoration-white">Legal & Policies</h1>
+            <p class="mt-1 hover:text-fuchsia-300 cursor-pointer">Privacy Policy</p>
+            <p class="mt-1 hover:text-fuchsia-300 cursor-pointer">Terms & Conditions</p>
+            <p class="mt-1 hover:text-fuchsia-300 cursor-pointer">Contact Us</p>
+        </div>
+    </div>
+
+    <div id="root"></div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
